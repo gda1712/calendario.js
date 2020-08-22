@@ -1,4 +1,8 @@
-
+/**
+ * Creado por: Gabriel Díaz
+ * gitHub: https://github.com/gda1712
+ * 
+ */
 class Calendario
 {
     /**
@@ -17,10 +21,14 @@ class Calendario
         
         this.contruirCalendario();
 
+        /*Función, que se ejecutara cada vez que se cambie el mes, esta es proporcionada
+        En el método this.cambioMes(funcion)*/
+        this.ejecutarAlCambiarMes;
+
+        //Añadimos los eventos al precionar los botones del calendario
         document.querySelector("#btn-izquierda-calendario").addEventListener("click", this.irMesAnterior.bind(this));
 
         document.querySelector("#btn-derecha-calendario").addEventListener("click", this.irMesPosterior.bind(this));
-
     }
 
 
@@ -95,7 +103,7 @@ class Calendario
     eliminarDiasCalendario()
     {
         /**Elimina del html todas las filas con los días */
-        const filas = document.querySelectorAll(".dias-calendario");
+        const filas = document.querySelectorAll(".fila-dias-calendario");
 
         for(let fila of filas)
         {
@@ -127,13 +135,28 @@ class Calendario
         {
             //Se crea la fila de la tabla del html
             let fila = document.createElement("tr");
-            fila.classList.add("dias-calendario");
+            fila.classList.add("fila-dias-calendario");
 
             for(let i = 0; i < 7; i++)
             {
                 //SE crea el elemento de la tabla, y se pasa al siguiente día
                 let nuevoElemento = document.createElement("td")
-                nuevoElemento.innerHTML = `<button class="btn">${fechaAux.format("DD")}</button>`;
+                //Bandera que indica si un día pertenece al mes actual
+                let perteneceAlMesActual;
+
+                //En caso qeu pertenezca se guarda en el html un indicador personalizado
+                //llamado "mesActual", el cual guarda true si pertenece al mes, false en caso contrario
+                if(fechaAux.format("MM") == this.fechaActual.format("MM"))
+                    perteneceAlMesActual = true;
+                else
+                    perteneceAlMesActual = false;
+
+                nuevoElemento.innerHTML = `
+                    <button class="btn celda-dia-calendario" mesActual=${perteneceAlMesActual}>
+                        ${fechaAux.format("DD")}
+                    </button>`;
+
+
                 fila.appendChild(nuevoElemento);
 
                 fechaAux.add(1, 'd');
@@ -148,9 +171,41 @@ class Calendario
     cantidadDias()
     {
         /**Método que retorna la cantidad de días que tiene el mes del elemento this.fechaActual
-         * contando desde el día 1 hasta el día de la fecha, ejemplo del día 1 al 2 hay 1 día
+         * contando desde el día 1 hasta el día de la fecha, ejemplo del día 01 al 02 hay 1 día
          */
         return Number(this.fechaActual.format("DD")) - 1;
+    }
+
+
+    //-------------------------------MÉTODOS USUARIO------------------------------
+    anadirEventosCeldas(funcion, dias, evento)
+    {
+        /**
+         * Método que recibe por parametro una función, los días del mes actual,
+         * a los que se requiere añadir un evento, por ejemplo [01, 10, 20], y el nombre
+         * del evento, por ejemplo "click" 
+        */
+
+        const celdas = document.querySelectorAll(".celda-dia-calendario");
+
+        for(let celda of celdas)
+        {
+            //Si el día revisado existe y pertenece al mes actual: añadimos el evento
+            if(dias.some(dia => Number(dia) == Number(celda.innerText)) && celda.getAttribute("mesActual") == "true")
+                celda.addEventListener(evento, funcion);
+            
+        }
+    }
+
+
+    cambioMes(funcion)
+    {
+        /**Método que recibe por parametro una funcion, que sera guardada en el obj
+         * para ser ejecutada cada vez que se cambia de mes (Cada vez que se oprime el btn
+         * del calendario "derecha" o "izquierda")
+         */
+
+        this.ejecutarAlCambiarMes = funcion;
     }
 
 
@@ -160,9 +215,9 @@ class Calendario
         /**Método que cambia el mes actual, lleval al mes anterior, modificando por
          * consiguiente el Html del DOM
          */
-        console.log("dentro");
         this.fechaActual.subtract(1, "month");
         this.contruirCalendario();
+        this.ejecutarAlCambiarMes();
     }
 
 
@@ -172,5 +227,6 @@ class Calendario
          * consiguiente el Html del DOM*/
         this.fechaActual.add(1, "month");
         this.contruirCalendario();
+        this.ejecutarAlCambiarMes();
     }
 }
