@@ -63,7 +63,7 @@ const funcionEvento = function() { console.log("Hola Mundo") }
 calendario.anadirEventosCeldas(funcionEvento, [20, 21, 17], "click");
 ```
 
-El resultado sera que a cada día que se paso por parámetro se le agregara el evento "click" ejecutando la funcion **funcionEvento**
+El resultado sera que a cada día que se paso por parámetro se le agregara el evento "click" ejecutando la funcion *funcionEvento*
 
 **cambioMes(funcion)**
 
