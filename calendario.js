@@ -1,7 +1,7 @@
 /**
  * Creado por: Gabriel Díaz
  * gitHub: https://github.com/gda1712
- * 
+ * Licencia: MIT
  */
 class Calendario
 {
