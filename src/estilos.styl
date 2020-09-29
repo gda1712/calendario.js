@@ -1,0 +1,25 @@
+
+.calendario
+    display: grid
+    grid-template-columns: repeat(7, 7fr)
+
+    &__btn:first-child
+        grid-column: span 2
+    &__fecha:nth-child(2)
+        grid-column: span 3
+        
+        text-align: center
+        display: flex
+        align-items: center
+        justify-content: center
+
+    &__btn:nth-child(3)
+        grid-column: span 2
+    
+    &__btn
+
+        padding: 1em;
+        transition: .3s easy;
+
+        
+

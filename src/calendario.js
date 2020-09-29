@@ -3,12 +3,16 @@
  * gitHub: https://github.com/gda1712
  * Licencia: MIT
  */
+
+//Dependencias
+let moment = require("moment");
+
+
 class Calendario
 {
     /**
      * Clase que se encarga de manipular el calendario de la UI
      * Necesita las dependencias:
-     * bootstrap
      * moment.js
      */
     constructor(id)
@@ -17,7 +21,8 @@ class Calendario
         this.fechaActual = moment();
         
         //Obtenemos todos los elementos del calendario del DOM
-        this.fechaCalendarioHtml = document.querySelector("#fecha-calendario");
+        this.calendarioHtml = document.querySelector(".calendario");
+        this.fechaCalendarioHtml = document.querySelector(".calendario__fecha");
         
         this.contruirCalendario();
 
@@ -38,30 +43,18 @@ class Calendario
          * estructura básica del calendario
          */
         const htmlInicial = `
-        <table id=mitabla class="table text-center">
-            <thead class="thead-light">
-                <tr>    
-                    <th scope="col" colspan="7" class="text-center">
-                        <button class="btn" id="btn-izquierda-calendario">&larr;</button> 
-                        <span id="fecha-calendario"> Agosto 2020 </span>       
-                        <button class="btn" id="btn-derecha-calendario">&rarr;</button>
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <th>Dom</th>
-                    <th>Lun</th>
-                    <th>Mar</th>
-                    <th>Mié</th>
-                    <th>Jue</th>
-                    <th>Vie</th>
-                    <th>Sab</th>
-                </tr>
-
-            </tbody>
-            
-        </table>
+        <div class="calendario">
+            <button class="calendario__btn" id="btn-izquierda-calendario">&larr;</button> 
+            <section class="calendario__fecha"></section>       
+            <button class="calendario__btn" id="btn-derecha-calendario">&rarr;</button>
+            <button class="calendario__btn">Dom</button>
+            <button class="calendario__btn">Lun</button>
+            <button class="calendario__btn">Mar</button>
+            <button class="calendario__btn">Mié</button>
+            <button class="calendario__btn">Jue</button>
+            <button class="calendario__btn">Vie</button>
+            <button class="calendario__btn">Sab</button>
+        </div>
         `
         document.getElementById(id).innerHTML = htmlInicial;
     }
@@ -69,8 +62,8 @@ class Calendario
 
     contruirCalendario()
     {
-        /**Dependiendo del mes actual, contruye el html del calendario y lo inserta en la DOM */
-        this.fechaCalendarioHtml.innerText = this.fechaActual.format("MM YYYY");
+        /**Dependiendo del mes actual, contruye el html del calendario y lo inserta en el DOM */
+        this.fechaCalendarioHtml.innerHTML = `<span>${this.fechaActual.format("MM YYYY")}<span>`;
         this.eliminarDiasCalendario();
 
         switch(this.fechaActual.subtract(this.cantidadDias(), 'd').format("dddd"))
@@ -103,11 +96,11 @@ class Calendario
     eliminarDiasCalendario()
     {
         /**Elimina del html todas las filas con los días */
-        const filas = document.querySelectorAll(".fila-dias-calendario");
+        const dias = document.querySelectorAll(".calendario__btn--dias");
 
-        for(let fila of filas)
+        for(let dia of dias)
         {
-            fila.remove();
+            dia.remove();
         }
     }
 
@@ -115,6 +108,7 @@ class Calendario
     llenarCalendario(diaSemana)
     {
         /**
+         * 
          * Método que recibe por parametro el número que equivale al primer día
          * de la semana, ejemplo Domingo : 0, Lunes : 1, llena la tabla
          * como si fuera un arreglo
@@ -133,37 +127,27 @@ class Calendario
         //Si ya no estamos en el mes actual, se termina el ciclo
         while(fechaAux.format("MM") != fechaAux2.format("MM"))
         {
-            //Se crea la fila de la tabla del html
-            let fila = document.createElement("tr");
-            fila.classList.add("fila-dias-calendario");
 
             for(let i = 0; i < 7; i++)
             {
-                //SE crea el elemento de la tabla, y se pasa al siguiente día
-                let nuevoElemento = document.createElement("td")
-                //Bandera que indica si un día pertenece al mes actual
-                let perteneceAlMesActual;
+                //SE crea el botón del calendario, y se pasa al siguiente día
+                let nuevoElemento = document.createElement("button")
 
-                //En caso qeu pertenezca se guarda en el html un indicador personalizado
-                //llamado "mesActual", el cual guarda true si pertenece al mes, false en caso contrario
-                if(fechaAux.format("MM") == this.fechaActual.format("MM"))
-                    perteneceAlMesActual = true;
+                //En caso que no pertenezca se guarda en el html con una clase
+                //llamada ".calendario__btn--dias--false"
+                if(fechaAux.format("MM") == this.fechaActual.format("MM")) 
+                    {}
                 else
-                    perteneceAlMesActual = false;
+                    nuevoElemento.className = "calendario__btn--dias--false";
 
-                nuevoElemento.innerHTML = `
-                    <button class="btn celda-dia-calendario" mesActual=${perteneceAlMesActual}>
-                        ${fechaAux.format("DD")}
-                    </button>`;
+                nuevoElemento.classList.add("calendario__btn--dias");
+                nuevoElemento.innerText = fechaAux.format("DD");
 
-
-                fila.appendChild(nuevoElemento);
+                //Añadimos la fila al html
+                this.calendarioHtml.appendChild(nuevoElemento);
 
                 fechaAux.add(1, 'd');
             }
-
-            //Añadimos la fila al html
-            document.querySelector("#mitabla tbody").appendChild(fila);
         }
     }
 
@@ -186,12 +170,12 @@ class Calendario
          * del evento, por ejemplo "click" 
         */
 
-        const celdas = document.querySelectorAll(".celda-dia-calendario");
+        const celdas = document.querySelectorAll(".calendario__btn--dias");
 
         for(let celda of celdas)
         {
             //Si el día revisado existe y pertenece al mes actual: añadimos el evento
-            if(dias.some(dia => Number(dia) == Number(celda.innerText)) && celda.getAttribute("mesActual") == "true")
+            if(dias.some(dia => Number(dia) == Number(celda.innerText)) && celda.classList.contains("calendario__btn--dias--false") == "false")
                 celda.addEventListener(evento, funcion);
             
         }
@@ -230,3 +214,5 @@ class Calendario
         this.ejecutarAlCambiarMes();
     }
 }
+
+module.exports = {Calendario:Calendario};

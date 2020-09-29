@@ -1,0 +1,23 @@
+{
+  "name": "calendario",
+  "version": "1.0.0",
+  "description": "Librería de JavaScript, que facilita la creación de calendarios para html",
+  "main": "calendario.js",
+  "scripts": {
+    "bro": "browserify src/calendario.js --s cal > dist/calendario.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gda1712/calendario.js.git"
+  },
+  "author": "Gabriel Díaz Andrade",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gda1712/calendario.js/issues"
+  },
+  "homepage": "https://github.com/gda1712/calendario.js#readme",
+  "devDependencies": {},
+  "dependencies": {
+    "moment": "^2.27.0"
+  }
+}
