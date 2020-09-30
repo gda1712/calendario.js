@@ -5686,9 +5686,10 @@ class Calendario
      * Necesita las dependencias:
      * moment.js
      */
-    constructor(id)
+    constructor(id, color)
     {
-        this.crearHtmlInicial(id);
+        /**Colors: oscuro, inspiracion */
+        this.crearHtmlInicial(id, color);
         this.fechaActual = moment();
         
         //Obtenemos todos los elementos del calendario del DOM
@@ -5708,23 +5709,23 @@ class Calendario
     }
 
 
-    crearHtmlInicial(id)
+    crearHtmlInicial(id, color)
     {
         /**Método que recibe el id de un elemento html del DOM, para insertar la
          * estructura básica del calendario
          */
         const htmlInicial = `
-        <div class="calendario">
+        <div class="calendario calendario-${color}">
             <button class="calendario__btn" id="btn-izquierda-calendario">&larr;</button> 
             <section class="calendario__fecha"></section>       
             <button class="calendario__btn" id="btn-derecha-calendario">&rarr;</button>
-            <button class="calendario__btn">Dom</button>
-            <button class="calendario__btn">Lun</button>
-            <button class="calendario__btn">Mar</button>
-            <button class="calendario__btn">Mié</button>
-            <button class="calendario__btn">Jue</button>
-            <button class="calendario__btn">Vie</button>
-            <button class="calendario__btn">Sab</button>
+            <section class="calendario__btn">Dom</section>
+            <section class="calendario__btn">Lun</section>
+            <section class="calendario__btn">Mar</section>
+            <section class="calendario__btn">Mié</section>
+            <section class="calendario__btn">Jue</section>
+            <section class="calendario__btn">Vie</section>
+            <section class="calendario__btn">Sab</section>
         </div>
         `
         document.getElementById(id).innerHTML = htmlInicial;
@@ -5767,7 +5768,7 @@ class Calendario
     eliminarDiasCalendario()
     {
         /**Elimina del html todas las filas con los días */
-        const dias = document.querySelectorAll(".calendario__btn--dias");
+        const dias = document.querySelectorAll(".calendario__dias");
 
         for(let dia of dias)
         {
@@ -5809,9 +5810,9 @@ class Calendario
                 if(fechaAux.format("MM") == this.fechaActual.format("MM")) 
                     {}
                 else
-                    nuevoElemento.className = "calendario__btn--dias--false";
+                    nuevoElemento.className = "calendario__dias--false";
 
-                nuevoElemento.classList.add("calendario__btn--dias");
+                nuevoElemento.classList.add("calendario__dias");
                 nuevoElemento.innerText = fechaAux.format("DD");
 
                 //Añadimos la fila al html
@@ -5841,12 +5842,12 @@ class Calendario
          * del evento, por ejemplo "click" 
         */
 
-        const celdas = document.querySelectorAll(".calendario__btn--dias");
+        const celdas = document.querySelectorAll(".calendario__dias");
 
         for(let celda of celdas)
         {
             //Si el día revisado existe y pertenece al mes actual: añadimos el evento
-            if(dias.some(dia => Number(dia) == Number(celda.innerText)) && celda.classList.contains("calendario__btn--dias--false") == "false")
+            if(dias.some(dia => Number(dia) == Number(celda.innerText)) && celda.classList.contains("calendario__dias--false") == "false")
                 celda.addEventListener(evento, funcion);
             
         }
@@ -5861,6 +5862,13 @@ class Calendario
          */
 
         this.ejecutarAlCambiarMes = funcion;
+    }
+
+
+    cambiarColor(color)
+    {
+        /**Método que cambia el color del calendario por el que se le pase por parámetro */
+        this.calendarioHtml.className = `calendario calendario-${color}`;
     }
 
 

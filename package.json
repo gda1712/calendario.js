@@ -4,7 +4,8 @@
   "description": "Librería de JavaScript, que facilita la creación de calendarios para html",
   "main": "calendario.js",
   "scripts": {
-    "bro": "browserify src/calendario.js --s cal > dist/calendario.js"
+    "bro": "browserify src/calendario.js --s cal > dist/calendario.js",
+    "sty": "stylus src/estilos.styl --out dist/calendario.css"
   },
   "repository": {
     "type": "git",

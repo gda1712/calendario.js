@@ -1,0 +1,49 @@
+
+/*Estilos de los botones de cambiar mes aterior y siguiente*/
+botonCambioMes()
+    margin: 0px
+    border: 0px solid 
+    grid-column: span 2
+
+/*Le añade a los botones color y el efecto hover*/
+colorAndHover(colorTexto, colorFondo)
+    transition: 0.3s ease
+    color: colorTexto
+    background-color: colorFondo
+
+    &:hover
+        transition: 0.3s ease
+        background: lightness(colorFondo, 50%)
+
+/*Caracteristicas para los botones de días*/
+botonDias(colorTexto, colorFondo)
+    margin: 0px
+    border: 0px solid 
+    padding: 1em
+
+    colorAndHover(colorTexto, colorFondo)
+
+/*Le da color al header y botones, desde los de cambio de mes hasta los de los dias (lunes, martes...)*/
+cambiarColorHeader(colorFondoHeader, colorTextoHeader)
+    & ^[0]__btn:nth-child(-n+10)
+        colorAndHover(colorTextoHeader, colorFondoHeader)
+
+    & ^[0]__fecha
+        colorAndHover(colorTextoHeader, colorFondoHeader)
+        user-select: none
+
+    & ^[0]__btn:nth-child(n+4):nth-child(-n+10)
+        user-select: none
+
+/*Le da color al botón de cada día, dando uno diferente si es o no del mes actual*/
+cambiarColorDias(colorFondoDias, colorTextoDias, colorFondoDiasFalse, colorTextoDiasFalse)
+    & ^[0]__dias
+        botonDias(colorTextoDias, colorFondoDias)
+    
+    & ^[0]__dias--false
+        botonDias(colorTextoDiasFalse, colorFondoDiasFalse)
+
+/*Se encarga de gestionar todas las llamadas para cambiar los colores*/
+cambiarColor(colorFondoHeader, colorTextoHeader, colorFondoDias, colorTextoDias, colorFondoDiasFalse, colorTextoDiasFalse)
+    cambiarColorHeader(colorFondoHeader, colorTextoHeader)
+    cambiarColorDias(colorFondoDias, colorTextoDias, colorFondoDiasFalse, colorTextoDiasFalse)

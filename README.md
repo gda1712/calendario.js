@@ -16,14 +16,14 @@ Estructura Carpetas
 -js
   -calendario.js
 -css
-  -estilos.css
+  -calendario.css
 index.html
 ```
 
  **index.html**
  ```
  <head>
-    <link rel="stylesheet" href="css/estilos.css">
+    <link rel="stylesheet" href="css/calendario.css">
  <head>
  <body>
     <script src="js/calendario.js"></script>
@@ -33,10 +33,10 @@ index.html
 
 ## USO 📦
 
-Para usar el proyecto solo basta con instanciar un objeto de la clase *cal.Calendario* pasandole al constructor como parámetro el *id* del elemento HTML al que se va a agregar el calendario
+Para usar el proyecto solo basta con instanciar un objeto de la clase *cal.Calendario* pasandole al constructor como parámetro el *id* y el *color* (ir a sección *Colores* para más información) del elemento HTML al que se va a agregar el calendario
 
 ```
-const miCalendario = new cal.Calendario("miId");
+const miCalendario = new cal.Calendario("miId", "inspiracion");
 ```
 
 Esto iniciara el calendario dentro del id pasado por parámetro al constructor
@@ -67,9 +67,26 @@ const funcionEvento = function() { console.log("Hola Mundo") }
 miCalendario.cambioMes(funcionEvento);
 ```
 
-## Construido con 🛠️
+**cambiarColor(color))**
 
-_Menciona las herramientas que utilizaste para crear tu proyecto_
+Este método recibe por parámetro un color (ir a la sección *Colores* para más información) y cambia el color del calendario, ejemplo de uso:
+
+```
+miCalendario.cambioColor("inspiracion");
+```
+
+## Colores
+
+
+**inspiracion**
+
+! [inspiracion] (imagenesProyecto/calendario-inspiracion.png)
+
+**oscuro**
+
+! [oscuro] (imagenesProyecto/calendario-oscuro.png)
+
+## Construido con 🛠️
 
 * [node.js](https://nodejs.org/es/) - Entorno de ejecución para JavaScript
 * [browserify.js](http://browserify.org/) - Compilador de modulos JavaScript
@@ -93,4 +110,4 @@ Este proyecto está bajo la Licencia (MIT) - mira el archivo [LICENSE.md](LICENS
 
 
 ---
-⌨️ con ❤️ por [Gabriel Díaz](https://github.com/gda1712) 😊
+⌨️ con ❤️ desde Venezuela
