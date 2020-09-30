@@ -81,6 +81,8 @@ miCalendario.cambioColor("inspiracion");
 **inspiracion**
 
 ![inspiracion](https://raw.githubusercontent.com/gda1712/calendario.js/master/imagenesProyecto/calendario-inspiracion.png)
+
+
 **oscuro**
 
 ![oscuro](https://raw.githubusercontent.com/gda1712/calendario.js/master/imagenesProyecto/calendario-oscuro.png)
