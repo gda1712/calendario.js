@@ -4,7 +4,7 @@ Crea calendarios HTML desde JavaScript de forma rápida y sencilla
 
 ## Comenzando 🚀
 
-Usar el proyecto es muy sencillo, solo debes instanciar en tu archivo JS un elemento de la clase **Calendario**
+Usar el proyecto es muy sencillo, solo debes instanciar en tu archivo JS un elemento de la clase **cal.Calendario**
 
 
 ### Instalación 🔧
@@ -33,7 +33,7 @@ index.html
 
 ## USO 📦
 
-Para usar el proyecto solo basta con instanciar un objeto de la clase *cal.Calendario* pasandole al constructor como parámetro el *id* y el *color* (ir a sección *Colores* para más información) del elemento HTML al que se va a agregar el calendario
+Para usar el proyecto solo basta con instanciar un objeto de la clase *cal.Calendario* pasandole al constructor como parámetro el *id* del elemento HTML al que se va a agregar el calendario y el *color* (ir a sección *Colores* para más información) 
 
 ```
 const miCalendario = new cal.Calendario("miId", "inspiracion");
@@ -45,34 +45,25 @@ Esto iniciara el calendario dentro del id pasado por parámetro al constructor
 
 La librería cuenta con métodos que poco a poco se irán ampliando:
 
-**anadirEventosCeldas(funcion, dias, evento)**
+**anadirActividadCalendario(fecha, texto)**
 
-Este método permite añadir un evento a algún día del mes actual, ejemplo de uso:
-
-```
-const funcionEvento = function() { console.log("Hola Mundo") }
-
-miCalendario.anadirEventosCeldas(funcionEvento, [20, 21, 17], "click");
-```
-
-El resultado sera que a cada día que se paso por parámetro se le agregara el evento "click" ejecutando la funcion *funcionEvento*
-
-**cambioMes(funcion)**
-
-Este método recibe por parámetro una función, que se ejecutará cada vez que el usuario cambie de mes en el calendario, ejemplo de uso:
+Este método permite añadir una actividad a un día y hora en especifico. en la fecha se usa el formato *AAAA-MM-DD-HH-mm*, ejemplo de uso de una actividad el día *03 de octubre de 2020 a las 20:30*:
 
 ```
-const funcionEvento = function() { console.log("Hola Mundo") }
-
-miCalendario.cambioMes(funcionEvento);
+miCalendario.anadirActividadCalendario("2020-10-03-20-30", "Tocar violín");
 ```
+
+Esto permite que al dar click sobre un día con la actividad, se abra una ventana modal mostrando las actividades registradas en este día. Ejemplo del resultado de la ventana modal:
+
+![Ventana-Modal](https://raw.githubusercontent.com/gda1712/calendario.js/master/imagenesProyecto/calendario.gif)
+
 
 **cambiarColor(color))**
 
 Este método recibe por parámetro un color (ir a la sección *Colores* para más información) y cambia el color del calendario, ejemplo de uso:
 
 ```
-miCalendario.cambioColor("inspiracion");
+miCalendario.cambiarColor("inspiracion");
 ```
 
 ## Colores
@@ -87,11 +78,15 @@ miCalendario.cambioColor("inspiracion");
 
 ![oscuro](https://raw.githubusercontent.com/gda1712/calendario.js/master/imagenesProyecto/calendario-oscuro.png)
 
+
 ## Construido con 🛠️
 
 * [node.js](https://nodejs.org/es/) - Entorno de ejecución para JavaScript
 * [browserify.js](http://browserify.org/) - Compilador de modulos JavaScript
+* [terser](https://github.com/terser/terser) - Compresor de JS
 * [moment.js](https://momentjs.com/) - Librería para el manejo de fechas
+* [stylus](https://stylus-lang.com/) - Precompilador de CSS
+
 
 
 ## Autores ✒️
@@ -105,7 +100,7 @@ Este proyecto está bajo la Licencia (MIT) - mira el archivo [LICENSE.md](LICENS
 
 ## Expresiones de Gratitud 🎁
 
-* Comenta a otros sobre este proyecto 📢 
+* Gracias por usar y apoyar este proyecto 📢 
 * Cualquier mejora que puedas aportar sera bien recibida 🤓.
 
 

@@ -6,6 +6,7 @@
 
 //Dependencias
 let moment = require("moment");
+let fecha = require("./componentesJs/fecha.js")
 
 
 class Calendario
@@ -17,6 +18,10 @@ class Calendario
      */
     constructor(id, color)
     {
+
+        //Variable Fecha, se encarga de manipular las fechas de las actividades de la agenda
+        this.fechasActividades = new fecha.Fecha();
+
         /**Colors: oscuro, inspiracion */
         this.crearHtmlInicial(id, color);
         this.fechaActual = moment();
@@ -27,14 +32,13 @@ class Calendario
         
         this.contruirCalendario();
 
-        /*Función, que se ejecutara cada vez que se cambie el mes, esta es proporcionada
-        En el método this.cambioMes(funcion)*/
-        this.ejecutarAlCambiarMes;
-
         //Añadimos los eventos al precionar los botones del calendario
         document.querySelector("#btn-izquierda-calendario").addEventListener("click", this.irMesAnterior.bind(this));
 
         document.querySelector("#btn-derecha-calendario").addEventListener("click", this.irMesPosterior.bind(this));
+    
+        //Añadir eventos en los botones del mes para las actividades
+        this.anadirEventoActividades();
     }
 
 
@@ -162,7 +166,7 @@ class Calendario
     }
 
 
-    //-------------------------------MÉTODOS USUARIO------------------------------
+    //-------------------------------MÉTODOS PROGRAMADOR------------------------------
     anadirEventosCeldas(funcion, dias, evento)
     {
         /**
@@ -183,14 +187,14 @@ class Calendario
     }
 
 
-    cambioMes(funcion)
+    anadirActividadCalendario(fecha, textoActividad)
     {
-        /**Método que recibe por parametro una funcion, que sera guardada en el obj
-         * para ser ejecutada cada vez que se cambia de mes (Cada vez que se oprime el btn
-         * del calendario "derecha" o "izquierda")
+        /** Método que permite añadir una actividad a una fecha del calendario
+         * Esta actividad solo será visible si this.modoAgenda esta en true
+         * La fecha debe venir en el formato "AAAA-MM-DD-HH-mm"
          */
 
-        this.ejecutarAlCambiarMes = funcion;
+        this.fechasActividades.anadirActividad(fecha, textoActividad);
     }
 
 
@@ -209,7 +213,8 @@ class Calendario
          */
         this.fechaActual.subtract(1, "month");
         this.contruirCalendario();
-        this.ejecutarAlCambiarMes();
+        
+        this.anadirEventoActividades();
     }
 
 
@@ -219,7 +224,87 @@ class Calendario
          * consiguiente el Html del DOM*/
         this.fechaActual.add(1, "month");
         this.contruirCalendario();
-        this.ejecutarAlCambiarMes();
+
+        this.anadirEventoActividades();
+    }
+
+
+    anadirEventoActividades()
+    {
+        /** Se encarga de dar el evento de click a cada día del mes actual */
+        
+        const celdas = document.querySelectorAll(".calendario__dias");
+
+        for(let celda of celdas)
+        {
+            celda.addEventListener("click", this.cargarActividadesDia.bind(this));
+        }
+    }
+
+
+    cargarActividadesDia(evt)
+    {
+        /** Método que se encarga de cargar en el calendario las actividades del día
+         * del evento, crea y carga la ventana modal
+         */
+        const actividades = this.fechasActividades.obtenerActividadesDia(this.fechaActual.format("YYYY"), this.fechaActual.format("MM"), evt.target.innerText);
+        
+        //Aplicamos algoritmo burbuja para acomodar las fechas en orden ascendente
+        //Creamos auxiliar para saber continuar el ciclo del algoritmo
+
+        
+        let desordenado = false;
+        do
+        {
+            desordenado = false;
+            for(let i = 0; i < actividades.length -1; i++)
+            {
+                if(actividades[i].minutosActividad() > actividades[i+1].minutosActividad())
+                {
+                    const auxiliar = actividades[i];
+                    actividades[i] = actividades[i+1];
+                    actividades[i+1] = auxiliar;
+                    desordenado = true
+                }
+            }
+        }while(desordenado);
+
+        //Creamos el html para la ventana modal
+        let contenidoVentanaModal = "";
+
+        actividades.forEach(actividad =>
+            {
+                contenidoVentanaModal += `
+                    <div> 
+                        <div> ${actividad.hora}:${actividad.minuto} </div>
+                        <div> ${actividad.textoActividad} </div>
+                    </div>
+                    `
+            })
+        
+        const ventanaModal = document.createElement("div");
+        ventanaModal.className = "calendario__modal";
+
+        ventanaModal.innerHTML = `
+            <div class="calendario__modalContenido">
+                <div> Actividades del día <a href="#"> X </a> </div>
+                ${contenidoVentanaModal}
+            </div>`
+
+        this.calendarioHtml.appendChild(ventanaModal);
+
+        //Damos el evento para cerrar la ventana modal
+        document.querySelector(".calendario__modalContenido > div > a").addEventListener("click", this.cerrarVentanaModal.bind(this))
+    }
+
+
+    cerrarVentanaModal(evt)
+    {
+        /** Método que se encarga de eliminar la ventana modal */
+        evt.preventDefault();
+
+        document.querySelector(".calendario__modal").remove();
+
     }
 }
 

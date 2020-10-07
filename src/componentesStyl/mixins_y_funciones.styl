@@ -1,4 +1,6 @@
 
+//---------------------------CALENDARIO--------------------------------
+
 /*Estilos de los botones de cambiar mes aterior y siguiente*/
 botonCambioMes()
     margin: 0px
@@ -44,6 +46,20 @@ cambiarColorDias(colorFondoDias, colorTextoDias, colorFondoDiasFalse, colorTexto
         botonDias(colorTextoDiasFalse, colorFondoDiasFalse)
 
 /*Se encarga de gestionar todas las llamadas para cambiar los colores*/
-cambiarColor(colorFondoHeader, colorTextoHeader, colorFondoDias, colorTextoDias, colorFondoDiasFalse, colorTextoDiasFalse)
+cambiarColorCalendario(colorFondoHeader, colorTextoHeader, colorFondoDias, colorTextoDias, colorFondoDiasFalse, colorTextoDiasFalse)
     cambiarColorHeader(colorFondoHeader, colorTextoHeader)
     cambiarColorDias(colorFondoDias, colorTextoDias, colorFondoDiasFalse, colorTextoDiasFalse)
+
+
+cambiarColorVentanaModal(colorHeader, colorTextoHeader, colorFondoActividades, colorTextoActividades)
+    & ^[0]__modalContenido
+        & > div:first-child
+            background-color: colorHeader 
+            color: colorTextoHeader
+
+            & a 
+                color: colorTextoHeader
+
+        & > div:nth-child(n+2)
+            background-color: colorFondoActividades 
+            color: colorTextoActividades

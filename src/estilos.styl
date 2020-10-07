@@ -1,4 +1,6 @@
-@import "componentes/mixins_y_funciones.styl"
+@import "componentesStyl/variables.styl"
+@import "componentesStyl/mixins_y_funciones.styl"
+@import "componentesStyl/animaciones.styl"
 
 /*Contenedor bloque, contiene el calendario en una grid*/
 .calendario
@@ -8,10 +10,12 @@
     /*Aquí se irán declarando los colores del calendario*/
     /*colorFondoHeader, colorTextoHeader, colorFondoDias, colorTextoDias, colorFondoDiasFalse, colorTextoDiasFalse*/
     &-oscuro
-        cambiarColor(#000000, #ffffff, #14213d, #e5e5e5, #e5e5e5, #e5e5e5)
+        cambiarColorCalendario(cfhOscuro, cthOscuro, cfdOscuro,ctdOscuro,cfdfOscuro, ctdfOscuro)
+        cambiarColorVentanaModal(cfhOscuro, cthOscuro, cfdOscuro,ctdOscuro)
+    
     &-inspiracion 
-        cambiarColor(#ff414d, #d9ecf2, #1aa6b7, #d9ecf2, #d9ecf2, #d9ecf2)
-
+        cambiarColorCalendario(cfhInspiracion, cthInspiracion, cfdInspiracion, ctdInspiracion, cfdfInspiracion, ctdfInspiracion)
+        cambiarColorVentanaModal(cfhInspiracion, cthInspiracion, cfdInspiracion, ctdInspiracion)
     /*Seleccionamos a los botones y fechas para añadirle estilos que solo se aplican a ellos*/
     &__btn:first-child
         botonCambioMes()
@@ -32,4 +36,62 @@
     &__btn
         padding: 1em;
         transition: .3s easy;
+
+    //---------------Ventana Modal Diario--------------------
+    &__modal
+        background-color: rgba(0,0,0,0.4);
+        position: fixed
+
+        animation-duration: 1s;
+        animation-name: oscurecerColorModal;
+
+        left: 0;
+        top: 0;
+
+        z-index: 1
+        width: 100%
+        height: 100% 
+        overflow: auto 
+
+        display: flex;
+
+        justify-content: center
+        align-items: center
+        
+        &Contenido 
+            width: 80%
+            height: 80%
+            background-color: white
+
+            animation-duration: 1s;
+            animation-name: desplazarArribaAbajo;
+
+            border-radius: 30px 30px 30px 30px
+
+            & > div:first-child
+                text-align: center
+                
+                border-radius: 30px 30px 0px 0px
+                
+                font-size: 30px
+                padding-top: 1em
+                padding-bottom: 1em
+                font-weight: bold
+
+                & a 
+                    float: right 
+                    margin-right: 1em
+                    text-decoration: none
+                    
+                    
+
+            & > div:nth-child(n+2)
+                display: grid
+                grid-template-columns: 1fr 3fr
+
+                text-align: center
+
+                padding-top: 1em
+                padding-bottom: 1em
+
 
