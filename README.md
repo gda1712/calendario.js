@@ -74,9 +74,24 @@ miCalendario.cambiarColor("inspiracion");
 ![inspiracion](https://raw.githubusercontent.com/gda1712/calendario.js/master/imagenesProyecto/calendario-inspiracion.png)
 
 
+**mora**
+
+![mora](https://raw.githubusercontent.com/gda1712/calendario.js/master/imagenesProyecto/calendario-mora.png)
+
+
+**oficina**
+
+![oficina](https://raw.githubusercontent.com/gda1712/calendario.js/master/imagenesProyecto/calendario-oficina.png)
+
+
 **oscuro**
 
 ![oscuro](https://raw.githubusercontent.com/gda1712/calendario.js/master/imagenesProyecto/calendario-oscuro.png)
+
+
+**tinieblas**
+
+![tinieblas](https://raw.githubusercontent.com/gda1712/calendario.js/master/imagenesProyecto/calendario-tinieblas.png)
 
 
 ## Construido con 🛠️
