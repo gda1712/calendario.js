@@ -28,6 +28,10 @@
     &-oficina
         cambiarColorCalendario(cfhOficina, cthOficina, cfdOficina, ctdOficina, cfdfOficina, ctdfOficina)
         cambiarColorVentanaModal(cfhOficina, cthOficina, cfdOficina, ctdOficina)
+
+    &-tenebrosidad
+        cambiarColorCalendario(cfhTenebrosidad, cthTenebrosidad, cfdTenebrosidad ,ctdTenebrosidad, cfdfTenebrosidad, ctdfTenebrosidad)
+        cambiarColorVentanaModal(cfhTenebrosidad, cthTenebrosidad, cfdTenebrosidad ,ctdTenebrosidad)
         
     /*Seleccionamos a los botones y fechas para añadirle estilos que solo se aplican a ellos*/
     &__btn:first-child
@@ -49,6 +53,9 @@
     &__btn
         padding: 1em;
         transition: .3s easy;
+        display: flex
+        align-items: center
+        justify-content: center
 
     //---------------Ventana Modal Diario--------------------
     &__modal

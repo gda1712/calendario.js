@@ -89,6 +89,11 @@ miCalendario.cambiarColor("inspiracion");
 ![oscuro](https://raw.githubusercontent.com/gda1712/calendario.js/master/imagenesProyecto/calendario-oscuro.png)
 
 
+**tenebrosidad**
+
+![tenebrosidad](https://raw.githubusercontent.com/gda1712/calendario.js/master/imagenesProyecto/calendario-tenebrosidad.png)
+
+
 **tinieblas**
 
 ![tinieblas](https://raw.githubusercontent.com/gda1712/calendario.js/master/imagenesProyecto/calendario-tinieblas.png)
